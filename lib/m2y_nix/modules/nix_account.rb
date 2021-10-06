@@ -1,17 +1,17 @@
 module M2yNix
 
   class NixAccount < NixModule
-    def def initialize(access_key, secret_key, env)
-      startModule(access_key, secret_key, env)
+    def initialize(access_key)
+      startModule(access_key)
     end
 
     def balance
-      response = @request.get(@url + '/balance')
+      response = @request.get(@url + ACCOUNT_PATH + '/balance')
       model = NixModel.new
 
       model.balance = response.dig('balance', 'available', 'amount')
 
-      model.balance.present? ? model : "Unavailable"
+      model.balance.present? ? model : response
     end 
 
   end

@@ -1,15 +1,14 @@
 module M2yNix
 
- class NixModule
+  class NixModule
+    def startModule(access_key)
+      @request = NixRequest.new(access_key)
+      @url = M2yNix.configuration.server_url
+    end
 
-     def startModule(access_key, env)
-       @request = NixRequest.new(access_key)
-       @url = NixHelper.homologation?(env) ? URL_HML : URL_PRD
-     end
-
-     def generateResponse(input)
-       NixHelper.generate_general_response(input)
-     end
- end
+    def generateResponse(input)
+      NixHelper.generate_general_response(input)
+    end
+  end
 
 end

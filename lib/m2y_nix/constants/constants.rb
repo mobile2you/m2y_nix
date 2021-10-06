@@ -3,12 +3,7 @@ module M2yNix
   HOMOLOGATION = 'hml'
   PRODUCTION = 'prd'
 
-  # url
-  URL_HMG = 'nix-core-qa.cloudint.nexxera.com/api/v1'
-  URL_PRD = 'nix-core-qa.cloudint.nexxera.com/api/v1'
-
   ### Paths
-
   # Account
   ACCOUNT_PATH = '/accounts'
   USER_PATH = '/users'
