@@ -9,9 +9,9 @@ module M2yNix
       }
     end
 
-    def get(url)
+    def get(url, query_params = {})
       puts url.to_s
-      req = HTTParty.get(url, headers: @headers)
+      req = HTTParty.get(url, headers: @headers, query: query_params)
       req.parsed_response
     end
 
