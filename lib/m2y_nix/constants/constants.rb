@@ -8,4 +8,5 @@ module M2yNix
   ACCOUNT_PATH = '/accounts'
   USER_PATH = '/users'
   CARD_PATH = '/cards'
+  FEE_PATH = '/fees'
 end
