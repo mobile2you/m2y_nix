@@ -4,6 +4,26 @@ module M2yNix
       startModule(access_key)
     end
 
+    def transfer(params)
+      recipient = params[:recipient]
+
+      body = {
+        amount: params[:amount],
+        recipient_account: recipient[:account],
+        description: params[:description],
+        recipient_name: recipient[:name],
+        recipient_social_number: recipient[:social_number],
+        recipient_branch: recipient[:branch],
+        recipient_bank_code: recipient[:bank][:code],
+        recipient_account_type: 'CHECKING', # Verificar o que podemos mandar nesse campo
+        recipient_bank_name: params[:type].zero? ? recipient[:bank][:name] : 'NIX'
+      }
+
+      response = @request.post(@url + ACCOUNT_PATH + TRANSFER_PATH, body)
+
+      response['authenticationCode'].present? ? response['authenticationCode'] : response
+    end
+
     def fees
       response = @request.get(@url + FEE_PATH)
       if response.dig('results')
