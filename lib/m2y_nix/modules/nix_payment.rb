@@ -21,7 +21,7 @@ module M2yNix
 
       response = @request.post(@url + ACCOUNT_PATH + TRANSFER_PATH, body)
 
-      response['authenticationCode'].present? ? response['authenticationCode'] : response
+      response
     end
 
     def fees
