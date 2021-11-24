@@ -19,7 +19,11 @@ module M2yNix
         recipient_bank_name: params[:type].zero? ? recipient[:bank][:name] : 'NIX'
       }
 
-      response = @request.post(@url + ACCOUNT_PATH + TRANSFER_PATH, body)
+      url = @url + ACCOUNT_PATH + TRANSFER_PATH
+
+      url += '/bank' if params[:type].zero?
+
+      response = @request.post(url, body)
 
       response
     end
