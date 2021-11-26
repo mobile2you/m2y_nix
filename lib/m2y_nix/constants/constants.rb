@@ -11,4 +11,9 @@ module M2yNix
   FEE_PATH = '/fees'
   
   TRANSFER_PATH = '/transfer'
+
+  ### Cadun Paths
+
+  CADUN_PATH = '/cadun'
+  PF_PATH = '/pf'
 end

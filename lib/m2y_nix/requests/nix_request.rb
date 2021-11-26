@@ -2,11 +2,12 @@ require 'httparty'
 
 module M2yNix
   class NixRequest
-    def initialize(access_key)
+    def initialize(access_key = nil)
       @headers = {
-        'Content-Type' => 'application/json',
-        'Authorization' => access_key
+        'Content-Type' => 'application/json'
+        # 
       }
+      @headers['Authorization'] = access_key unless access_key.nil?
     end
 
     def get(url, query_params = {})
