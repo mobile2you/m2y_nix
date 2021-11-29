@@ -4,7 +4,18 @@ module M2yNix
     end
 
     def self.auth(username, password)
-      HTTParty.post('https://apigateway-tst.nexxera.com/nix/cadun/auth', body: { user: username, password: password })
+      HTTParty.post(
+        'https://apigateway-tst.nexxera.com/nix/cadun/auth',
+        body: { user: username, password: password }
+      )
+    end
+
+    def self.refresh(token)
+      p @url
+      HTTParty.post(
+        'https://apigateway-tst.nexxera.com/nix/cadun/auth/refresh',
+        headers: { 'Refresh-Token': token }
+      )
     end
   end
 end

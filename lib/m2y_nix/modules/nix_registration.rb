@@ -8,7 +8,7 @@ module M2yNix
 
     def cadun(params)
       address = params[:address]
-      
+
       body = {
         name: params[:name],
         cpf: params[:cpf],
@@ -18,11 +18,11 @@ module M2yNix
         mother_name: params[:mother_name],
         social_name: params[:social_name],
         phone: params[:phone],
-        phone_country_code: '55', #phone[:code], # Chumbado +55 ?
+        phone_country_code: '55', # phone[:code], # Chumbado +55 ?
         address_number: address[:number],
         address_neighborhood: address[:neighborhood],
         address_complement: address[:complement],
-        address_country: "BR", #address[:country],
+        address_country: 'BR', # address[:country],
         address_line: address[:line],
         address_city: address[:city],
         address_state: address[:state],
@@ -37,24 +37,21 @@ module M2yNix
 
       response = @request.get(@url + USER_PATH + '/list')
 
-      if response.dig('cadun_id')
-        id = response['cadun_id'] 
-      else
-        return { error: "Missing cadun_id"}
-      end
+      return { error: "Missing cadun_id"} unless response['cadun_id']
 
+      id = response['cadun_id']
       address = params[:address]
 
       body = {
         phone: {
-          countryCode: "55",
+          countryCode: '55',
           number: params[:phone]
         },
         address: {
           buildingNumber: address[:number],
           neighborhood: address[:neighborhood],
           complement: address[:complement],
-          country: "BR",
+          country: 'BR',
           addressLine: address[:line],
           city: address[:city],
           state: address[:state],
