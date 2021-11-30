@@ -21,7 +21,7 @@ module M2yNix
 
       response = @request.post(@url + ACCOUNT_PATH + TRANSFER_PATH, body)
 
-      response['authenticationCode'].present? ? response['authenticationCode'] : response
+      response
     end
 
     def fees
@@ -38,6 +38,15 @@ module M2yNix
           }
         end
       end
+    end
+
+    def statement(params)
+      body = {
+        start_event_date: params[:start_event_date],
+        event_model: 'TRANSFER'
+      }
+     
+      @request.get(@url + ACCOUNT_PATH + STATEMENT_PATH, body)
     end
   end
 end
