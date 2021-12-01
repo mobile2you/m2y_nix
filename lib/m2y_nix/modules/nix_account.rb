@@ -28,5 +28,14 @@ module M2yNix
       end
       model
     end
+
+    def statement(params)
+      body = {
+        start_event_date: params[:start_event_date],
+        end_event_date: params[:end_event_date]
+      }
+      puts body
+      @request.get(@url + ACCOUNT_PATH + STATEMENT_PATH, body)
+    end
   end
 end
