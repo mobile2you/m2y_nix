@@ -13,33 +13,17 @@ module M2yNix
         description: params[:description],
         recipient_name: recipient[:name],
         recipient_social_number: recipient[:social_number],
-        recipient_branch: "0001",
-        recipient_bank_code: "332",
-        recipient_account_type: 'CHECKING', # Verificar o que podemos mandar nesse campo
-        recipient_bank_name: "Acesso Soluções De Pagamento S.A."
-      }
-
-      response = @request.post(@url + ACCOUNT_PATH + TRANSFER_PATH, body)
-
-      response
-    end
-
-    def transfer_bank(params)
-      recipient = params[:recipient]
-
-      body = {
-        amount: params[:amount],
-        recipient_account: recipient[:account],
-        description: params[:description],
-        recipient_name: recipient[:name],
-        recipient_social_number: recipient[:social_number],
         recipient_branch: recipient[:branch],
         recipient_bank_code: recipient[:bank][:code],
         recipient_account_type: 'CHECKING', # Verificar o que podemos mandar nesse campo
         recipient_bank_name: recipient[:bank][:name]
       }
 
-      response = @request.post(@url + ACCOUNT_PATH + TRANSFER_PATH + '/bank', body)
+      if recipient[:bank][:code] == "332"
+        response = @request.post(@url + ACCOUNT_PATH + TRANSFER_PATH, body)
+      else
+        response = @request.post(@url + ACCOUNT_PATH + TRANSFER_PATH + '/bank', body)
+      end
 
       response
     end
