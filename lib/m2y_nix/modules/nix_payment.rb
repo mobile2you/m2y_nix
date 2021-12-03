@@ -16,10 +16,14 @@ module M2yNix
         recipient_branch: recipient[:branch],
         recipient_bank_code: recipient[:bank][:code],
         recipient_account_type: 'CHECKING', # Verificar o que podemos mandar nesse campo
-        recipient_bank_name: params[:type].zero? ? recipient[:bank][:name] : 'NIX'
+        recipient_bank_name: recipient[:bank][:name]
       }
 
-      response = @request.post(@url + ACCOUNT_PATH + TRANSFER_PATH, body)
+      if recipient[:bank][:code] == "332"
+        response = @request.post(@url + ACCOUNT_PATH + TRANSFER_PATH, body)
+      else
+        response = @request.post(@url + ACCOUNT_PATH + TRANSFER_PATH + '/bank', body)
+      end
 
       response
     end
