@@ -10,7 +10,9 @@ module M2yNix
   CARD_PATH = '/cards'
   FEE_PATH = '/fees'
   STATEMENT_PATH = '/statement'
-
+  #Payment
+  PAYAMENT_PATH = '/payments'
+  #Transfer
   TRANSFER_PATH = '/transfer'
 
   ### Cadun Paths
