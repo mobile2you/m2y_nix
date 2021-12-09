@@ -52,5 +52,34 @@ module M2yNix
      
       @request.get(@url + ACCOUNT_PATH + STATEMENT_PATH, body)
     end
+
+    def find_payment_by_barcode(barcode)
+      response = @request.post(@url + PAYAMENT_PATH + '/bankly-validate-barcode', { "barcode": barcode })
+      if response.include?('code') || response.include?('message')
+        return { error: response.dig('message')}
+      end
+
+      model = NixModel.new
+      begin
+        model.status_code = 200
+        model.validation_id = response['id']
+        model.original_amount = response['originalAmount']
+        model.amount = response['amount']
+        model.due_date = response['dueDate']
+        model.assignor = response['assignor']
+        model.digitable = response['digitable']
+        model.recipient_name = response['recipient']['name']
+        model.recipiente_document_number = response['recipient']['documentNumber']
+        model.max_amount = response['maxAmount']
+        model.min_amount = response['minAmount']
+        model.allow_change_amount = response['allowChangeAmount']
+        model.interest_amount_calculated = response['charges']['interestAmountCalculated']
+        model.fine_amount_calculated = response['charges']['fineAmountCalculated']
+        model.discount_amount = response['charges']['discountAmount']
+      rescue StandardError
+        return render json: { message: error }, status: model.status_code = 404
+      end
+      model
+    end
   end
 end
