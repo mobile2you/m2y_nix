@@ -76,7 +76,7 @@ module M2yNix
         model.fine_amount_calculated = response['charges']['fineAmountCalculated']
         model.discount_amount = response['charges']['discountAmount']
       rescue StandardError
-        return render_crypt json: { message: error }, status: model.status_code = 404
+        return render json: { message: error }, status: model.status_code = 404
       end
       model
     end
