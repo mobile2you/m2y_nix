@@ -79,7 +79,6 @@ module M2yNix
         #Todo melhorar o tratamento desse retorno
         return {message: 'Missing params'}
       end
-      
       model
     end
   end
