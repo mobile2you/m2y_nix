@@ -58,7 +58,7 @@ module M2yNix
       if response.include?('code') || response.include?('message')
         return { error: response.dig('message')}
       end
-
+      
       model = NixModel.new
       begin
         model.status_code = 200
@@ -68,17 +68,18 @@ module M2yNix
         model.due_date = response['dueDate']
         model.assignor = response['assignor']
         model.digitable = response['digitable']
-        model.recipient_name = response['recipient']['name']
-        model.recipiente_document_number = response['recipient']['documentNumber']
+        model.recipient = response['recipient']
         model.max_amount = response['maxAmount']
         model.min_amount = response['minAmount']
         model.allow_change_amount = response['allowChangeAmount']
         model.interest_amount_calculated = response['charges']['interestAmountCalculated']
         model.fine_amount_calculated = response['charges']['fineAmountCalculated']
         model.discount_amount = response['charges']['discountAmount']
-      rescue StandardError
-        return render json: { message: error }, status: model.status_code = 404
+      rescue StandardError 
+        #Todo melhorar o tratamento desse retorno
+        return {message: 'Missing params'}
       end
+      
       model
     end
   end
