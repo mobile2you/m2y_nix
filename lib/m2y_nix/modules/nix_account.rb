@@ -37,5 +37,9 @@ module M2yNix
       puts body
       @request.get(@url + ACCOUNT_PATH + STATEMENT_PATH, body)
     end
+
+    def status
+      @request.get(@url + USER_PATH + '/pf' + '/list')
+    end
   end
 end
