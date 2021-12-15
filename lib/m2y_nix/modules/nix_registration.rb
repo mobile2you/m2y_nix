@@ -34,12 +34,6 @@ module M2yNix
     end
 
     def pf_account(params)
-
-      response = @request.get(@url + USER_PATH + '/list')
-
-      return { error: "Missing cadun_id"} unless response['cadun_id']
-
-      id = response['cadun_id']
       address = params[:address]
 
       body = {
@@ -62,8 +56,7 @@ module M2yNix
         socialName: params[:social_name],
         birthDate: params[:birthday],
         motherName: params[:mother_name],
-        email: params[:email],
-        id: id
+        email: params[:email]
       }
 
       response = @request.post(@url + USER_PATH + PF_PATH, body)
