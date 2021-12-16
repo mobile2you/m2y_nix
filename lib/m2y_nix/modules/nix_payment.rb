@@ -76,9 +76,49 @@ module M2yNix
         model.fine_amount_calculated = response['charges']['fineAmountCalculated']
         model.discount_amount = response['charges']['discountAmount']
       rescue StandardError 
-        #Todo melhorar o tratamento desse retorno
-        return {message: 'Missing params'}
+        return render json: {message: 'Missing params'}, status: 400
       end
+      model
+    end
+
+    def pay_billet(params)
+      billet = {
+        barcode: params[:barcode],
+        amount: params[:amount],
+        due_date: params[:due_date],
+        origin: params[:origin],
+        app_name: params[:app_name],
+        description: params[:description],
+        validation_id: params[:validation_id]
+    }
+    response = @request.post(@url + PAYAMENT_PATH + '/nix', billet, { 'social-number': params[:social_number] })
+      if response.include?('error') || response.include?('None')
+        return { error: response.dig('message')}
+      end
+      
+      model = NixModel.new
+      begin
+        model.status_code = 200
+        model.amount = response['amount']
+        model.description = response['description']
+        model.sender_account = response['account']
+        model.sender_name = response['name']
+        model.sender_social_number = response['social_number']
+        model.sender_branch = response['branch']
+        model.bank_code = response['code']
+        model.bank_account_type = response['account_type']
+        model.bank_name = response['bank_name']
+        model.recipient_social_name = response['social_name']
+        model.recipient_document = response['document']
+        model.recipient_emissor = response['emissor']
+        model.recipient_due_date = response['due_date']
+        model.recipient_barcode = response['barcode']
+        model.token = response['token']
+
+      rescue StandardError 
+        return render json: { message: 'Faltando Parametros' }
+      end
+
       model
     end
   end
