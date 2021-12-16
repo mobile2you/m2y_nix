@@ -76,8 +76,6 @@ module M2yNix
         model.fine_amount_calculated = response['charges']['fineAmountCalculated']
         model.discount_amount = response['charges']['discountAmount']
       rescue StandardError 
-        #Todo melhorar o tratamento desse retorno
-        debugger
         return render json: {message: 'Missing params'}, status: 400
       end
       model
@@ -120,7 +118,7 @@ module M2yNix
       rescue StandardError 
         return render json: { message: 'Faltando Parametros' }
       end
-      
+
       model
     end
   end
