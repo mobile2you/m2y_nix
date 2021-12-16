@@ -16,11 +16,11 @@ module M2yNix
       req.parsed_response
     end
 
-    def post(url, body)
+    def post(url, body, headers = {})
       puts url.to_s
       req = HTTParty.post(url,
                           body: body.to_json,
-                          headers: @headers)
+                          headers: @headers.merge(headers))
       req.parsed_response
     end
   end
