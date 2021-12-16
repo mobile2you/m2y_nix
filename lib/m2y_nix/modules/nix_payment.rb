@@ -76,29 +76,50 @@ module M2yNix
         model.fine_amount_calculated = response['charges']['fineAmountCalculated']
         model.discount_amount = response['charges']['discountAmount']
       rescue StandardError 
-        return render json: {message: 'Missing params'}, status: 400
+        return {message: 'Missing params'}, status: 400
       end
       model
     end
 
     def pay_billet(params)
-      billet = {
-        barcode: params[:barcode],
-        amount: params[:amount],
-        due_date: params[:due_date],
-        origin: params[:origin],
-        app_name: params[:app_name],
-        description: params[:description],
-        validation_id: params[:validation_id]
-    }
-    response = @request.post(@url + PAYAMENT_PATH + '/nix', billet, { 'social-number': params[:social_number] })
-      if response.include?('error') || response.include?('None')
-        return { error: response.dig('message')}
+      if params[:schedule_date].blank?
+        billet = {
+          barcode: params[:barcode],
+          amount: params[:amount],
+          due_date: params[:due_date],
+          origin: params[:origin],
+          app_name: params[:app_name],
+          description: params[:description],
+          validation_id: params[:validation_id]
+        }
+        response = @request.post(@url + PAYAMENT_PATH + '/nix', billet, { 'social-number': params[:social_number] })
+      else  
+        billet = {
+          amount: params[:amount],
+          code: params[:code],
+          description: params[:description].present? ? params[:description] : nil,
+          schedule_date: params[:schedule_date]
+        }
+        response = @request.post(@url + PAYAMENT_PATH + '/schedule', billet)
+      end 
+
+      if response.include?('errors') || response.include?('errors') || response['message'] != 'None'
+        return { error: response.dig('message') }
+      elsif response.dig('message') == 'None'
+        return { error: 'Boleto já Baixado.' }
+      elsif response['code'] == '500'
+        return { error: 'Erro inesperado, tente novamente mais tarde.' }
       end
-      
+
       model = NixModel.new
       begin
         model.status_code = 200
+        model.schedule_id = response['id']
+        model.schedule_status = response['status']
+        model.schedule_authentication_code = response['authentication_code']
+        model.schedule_type = response['type']
+        model.schedule_code = response['code']
+        model.schedule_date = response['schedule_date']
         model.amount = response['amount']
         model.description = response['description']
         model.sender_account = response['account']
@@ -116,7 +137,7 @@ module M2yNix
         model.token = response['token']
 
       rescue StandardError 
-        return render json: { message: 'Faltando Parametros' }
+        return { message: 'Faltando Parametros' }
       end
 
       model
