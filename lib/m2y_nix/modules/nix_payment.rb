@@ -54,11 +54,16 @@ module M2yNix
     end
 
     def find_payment_by_barcode(barcode)
-      response = @request.post(@url + PAYAMENT_PATH + '/bankly-validate-barcode', { "barcode": barcode })
-      if response.include?('code') || response.include?('message')
-        return { error: response.dig('message')}
-      end
+      response = @request.post(@url + PAYAMENT_PATH + '/bankly-validate-barcode', { "barcode": barcode })   
       
+      if response['message'].include?('digitable')
+        return { error: 'Código de barras inválido'}
+      end
+
+      if response['message'].include?('provider') || response['message'].include?('InternalServerError')
+        return { error: 'Erro inesperado, tente novamente mais tarde.'}
+      end
+    
       model = NixModel.new
       begin
         model.status_code = 200
@@ -76,7 +81,7 @@ module M2yNix
         model.fine_amount_calculated = response['charges']['fineAmountCalculated']
         model.discount_amount = response['charges']['discountAmount']
       rescue StandardError 
-        return {message: 'Missing params'}, status: 400
+        return {message: 'Faltando Parametros'}, status: 400
       end
       model
     end
@@ -102,7 +107,7 @@ module M2yNix
         }
         response = @request.post(@url + PAYAMENT_PATH + '/schedule', billet)
       end 
-
+      
       if response.include?('errors') || response.include?('errors') || response['message'] != 'None'
         return { error: response.dig('message') }
       elsif response.dig('message') == 'None'
