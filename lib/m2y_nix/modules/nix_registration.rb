@@ -85,5 +85,24 @@ module M2yNix
       p response
       response
     end
+
+    def patch_pf_documents(params, access_token)
+      body = {
+        'document_type' => params[:type],
+        'selfie' => params[:selfie],
+        'document_front' => params[:document_front],
+        'document_back' => params[:document_back]
+      }
+      p body
+      response = HTTParty.post(
+        "#{@url}#{USER_PATH}#{PF_PATH}/document_images",
+        body: body,
+        headers: {
+          'Authorization': access_token
+        }
+      )
+      p response
+      response
+    end
   end
 end
