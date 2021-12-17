@@ -54,38 +54,7 @@ module M2yNix
     end
 
     def find_payment_by_barcode(barcode)
-      response = @request.post(@url + PAYAMENT_PATH + '/bankly-validate-barcode', { "barcode": barcode })   
-  
-      if response.include?('code') || response.include?('errors') 
-        unless response['message'].nil?
-          if response['message'].include?('digitable')
-            return { error: 'Código de barras inválido'}
-          elsif response['message'].include?('provider') || response['message'].include?('InternalServerError')
-            return { error: 'Erro inesperado, tente novamente mais tarde.'}
-          end
-        end
-      end
-      
-      model = NixModel.new
-      begin
-        model.status_code = 200
-        model.validation_id = response['id']
-        model.original_amount = response['originalAmount']
-        model.amount = response['amount']
-        model.due_date = response['dueDate']
-        model.assignor = response['assignor']
-        model.digitable = response['digitable']
-        model.recipient = response['recipient']
-        model.max_amount = response['maxAmount']
-        model.min_amount = response['minAmount']
-        model.allow_change_amount = response['allowChangeAmount']
-        model.interest_amount_calculated = response['charges']['interestAmountCalculated']
-        model.fine_amount_calculated = response['charges']['fineAmountCalculated']
-        model.discount_amount = response['charges']['discountAmount']
-      rescue StandardError 
-        return {message: 'Faltando Parametros'}, status: 400
-      end
-      model
+      response = @request.post(@url + PAYAMENT_PATH + '/bankly-validate-barcode', { "barcode": barcode }) 
     end
 
     def pay_billet(params)
@@ -109,45 +78,6 @@ module M2yNix
         }
         response = @request.post(@url + PAYAMENT_PATH + '/schedule', billet)
       end 
-
-      if response.include?('errors') || response['message'] != 'None'
-      elsif response.dig['message'] == 'None'
-        return { error: 'Boleto já Baixado.' }
-      end 
-      if response['code'] == '500' || response.include?('DOCTYPE')
-        return { error: 'Erro inesperado, tente novamente mais tarde.' }
-      end
-
-      model = NixModel.new
-      begin
-        model.status_code = 200
-        model.schedule_id = response['id']
-        model.schedule_status = response['status']
-        model.schedule_authentication_code = response['authentication_code']
-        model.schedule_type = response['type']
-        model.schedule_code = response['code']
-        model.schedule_date = response['schedule_date']
-        model.amount = response['amount']
-        model.description = response['description']
-        model.sender_account = response['account']
-        model.sender_name = response['name']
-        model.sender_social_number = response['social_number']
-        model.sender_branch = response['branch']
-        model.bank_code = response['code']
-        model.bank_account_type = response['account_type']
-        model.bank_name = response['bank_name']
-        model.recipient_social_name = response['social_name']
-        model.recipient_document = response['document']
-        model.recipient_emissor = response['emissor']
-        model.recipient_due_date = response['due_date']
-        model.recipient_barcode = response['barcode']
-        model.token = response['token']
-
-      rescue StandardError 
-        return { message: 'Faltando Parametros' }
-      end
-
-      model
     end
   end
 end
