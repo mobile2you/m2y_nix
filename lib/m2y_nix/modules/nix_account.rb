@@ -32,9 +32,10 @@ module M2yNix
     def statement(params)
       body = {
         start_event_date: params[:start_event_date],
-        end_event_date: params[:end_event_date]
+        end_event_date: params[:end_event_date],
+        limit: params[:limit],
+        offset: params[:offset]
       }
-      puts body
       @request.get(@url + ACCOUNT_PATH + STATEMENT_PATH, body)
     end
 

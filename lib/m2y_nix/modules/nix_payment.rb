@@ -54,7 +54,7 @@ module M2yNix
     end
 
     def find_payment_by_barcode(barcode)
-      response = @request.post(@url + PAYAMENT_PATH + '/bankly-validate-barcode', { "barcode": barcode }) 
+      response = @request.post(@url + PAYMENT_PATH + '/bankly-validate-barcode', { "barcode": barcode }) 
     end
 
     def pay_billet(params)
@@ -68,7 +68,7 @@ module M2yNix
           description: params[:description],
           validation_id: params[:validation_id]
         }
-        response = @request.post(@url + PAYAMENT_PATH + '/nix', billet, { 'social-number': params[:social_number] })
+        response = @request.post(@url + PAYMENT_PATH + '/nix', billet, { 'social-number': params[:social_number] })
       else  
         billet = {
           amount: params[:amount],
@@ -76,7 +76,7 @@ module M2yNix
           description: params[:description].present? ? params[:description] : nil,
           schedule_date: params[:schedule_date]
         }
-        response = @request.post(@url + PAYAMENT_PATH + '/schedule', billet)
+        response = @request.post(@url + PAYMENT_PATH + '/schedule', billet)
       end 
     end
   end

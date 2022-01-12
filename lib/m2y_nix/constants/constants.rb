@@ -11,7 +11,7 @@ module M2yNix
   FEE_PATH = '/fees'
   STATEMENT_PATH = '/statement'
   #Payment
-  PAYAMENT_PATH = '/payments'
+  PAYMENT_PATH = '/payments'
   #Transfer
   TRANSFER_PATH = '/transfer'
 
