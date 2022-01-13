@@ -58,7 +58,7 @@ module M2yNix
     end
 
     def pay_billet(params)
-      if params[:schedule_date].blank?
+      if params[:schedule_date] == Date.today.strftime('%Y-%m-%d')
         billet = {
           barcode: params[:barcode],
           amount: params[:amount],
@@ -72,7 +72,7 @@ module M2yNix
       else  
         billet = {
           amount: params[:amount],
-          code: params[:code],
+          code: params[:barcode],
           description: params[:description].present? ? params[:description] : nil,
           schedule_date: params[:schedule_date]
         }
