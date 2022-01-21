@@ -79,5 +79,15 @@ module M2yNix
         response = @request.post(@url + PAYMENT_PATH + '/schedule', billet)
       end 
     end
+
+    def payments_list(params)
+      body = {}
+      body[:offset] = params[:offset] if params[:offset].present?
+      body[:limit] = params[:limit] if params[:limit].present?
+      body[:start_date_created] = params[:start_date_created] if params[:start_date_created].present?
+      body[:end_date_created] = params[:end_date_created] if params[:end_date_created].present?
+      body[:status] = params[:status] if params[:status].present?
+      response = @request.get(@url + PAYMENT_PATH, body)
+    end
   end
 end
