@@ -53,6 +53,15 @@ module M2yNix
       @request.get(@url + ACCOUNT_PATH + STATEMENT_PATH, body)
     end
 
+    def transfer_statement (params)
+      body = {
+        start_event_date: params[:start_event_date],
+        end_event_date: params[:end_event_date],
+        event_model: 'TRANSFER'
+      }
+      @request.get(@url + ACCOUNT_PATH + STATEMENT_PATH, body)
+    end 
+
     def find_payment_by_barcode(barcode)
       response = @request.post(@url + PAYMENT_PATH + '/bankly-validate-barcode', { "barcode": barcode }) 
     end
