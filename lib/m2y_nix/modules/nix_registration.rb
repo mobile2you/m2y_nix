@@ -41,7 +41,7 @@ module M2yNix
         state_registration: params[:state_registration],
         user_id: params[:user_id],
         business_name: params[:business_name],
-        cnpj: params[:cnpj]
+        cnpj: params[:cnpj],
         business_trading_name: params[:business_trading_name],
         business_email: params[:business_email],
         business_type: params[:business_type],
@@ -56,8 +56,8 @@ module M2yNix
         business_address_zip_code: params[:business_address_zip_code],
         document_type: params[:document_type],
         document_back: params[:document_back],
-        document_front: params[document_front:],
-        selfie: params[selfie:]
+        document_front: params[:document_front],
+        selfie: params[:selfie]
       }
       response = @request.post(@url + '/companies', body)
       p response
