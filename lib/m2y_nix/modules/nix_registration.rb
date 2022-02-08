@@ -33,6 +33,42 @@ module M2yNix
       p response
     end
 
+    def pj_account(params)
+      body = {
+        channel_code: params[:channel_code],
+        entity: "entity",
+        activity_code: params[:activity_code],
+        state_registration: params[:state_registration],
+        user_id: params[:user_id],
+        business_name: params[:business_name],
+        cnpj: params[:cnpj],
+        business_trading_name: params[:business_trading_name],
+        business_email: params[:business_email],
+        business_type: params[:business_type],
+        business_size: params[:business_size],
+        business_address_number: params[:business_address_number],
+        business_address_neighborhood: params[:business_address_neighborhood],
+        business_address_complement: params[:business_address_complement],
+        business_address_country: params[:business_address_country],
+        business_address_line: params[:business_address_line],
+        business_address_city: params[:business_address_city],
+        business_address_state: params[:business_address_state],
+        business_address_zip_code: params[:business_address_zip_code],
+        document_type: params[:document_type],
+        document_back: params[:document_back],
+        document_front: params[:document_front],
+        selfie: params[:selfie]
+      }
+      response = @request.post(@url + '/companies', body)
+      p response
+    end
+
+    def code
+      code = params[:code]
+      response = @request.get(@url + '/channels/' + code.to_s, body)
+      p response
+    end
+
     def pf_account(params)
       address = params[:address]
 
