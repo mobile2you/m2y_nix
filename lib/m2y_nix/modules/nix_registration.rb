@@ -33,12 +33,11 @@ module M2yNix
       p response
     end
 
-    def pj_account(params)
+    def pj_account(params, access_token)
       body = {
         channel_code: params[:channel_code],
         entity: "entity",
         activity_code: params[:activity_code],
-        state_registration: params[:state_registration],
         user_id: params[:user_id],
         business_name: params[:business_name],
         cnpj: params[:cnpj],
@@ -59,13 +58,20 @@ module M2yNix
         document_front: params[:document_front],
         selfie: params[:selfie]
       }
-      response = @request.post(@url + '/companies', body)
+      body[:state_registration] = params[:state_registration] if params[:state_registration].present?
+      response = HTTParty.post(
+        "#{@url}/companies",
+        body: body,
+        headers: {
+          'Authorization': access_token
+        }
+      )
       p response
     end
 
-    def code
+    def code(params)
       code = params[:code]
-      response = @request.get(@url + '/channels/' + code.to_s, body)
+      response = @request.get(@url + '/channels/' + code.to_s)
       p response
     end
 
