@@ -42,5 +42,9 @@ module M2yNix
     def status
       @request.get(@url + USER_PATH + '/pf' + '/list')
     end
+
+    def companies_status
+      @request.get(@url + '/companies')
+    end
   end
 end
