@@ -58,6 +58,7 @@ module M2yNix
         document_front: params[:document_front],
         selfie: params[:selfie]
       }
+      
       body[:state_registration] = params[:state_registration] if params[:state_registration].present?
       response = HTTParty.post(
         "#{@url}/companies",
