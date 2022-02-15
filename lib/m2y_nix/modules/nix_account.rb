@@ -46,5 +46,23 @@ module M2yNix
     def companies_status
       @request.get(@url + '/companies')
     end
+
+    def transaction_password(params)
+      body = { password: params[:password] }
+      @request.post(@url + '/transaction_auth', body)
+    end
+
+    def change_transaction_password(params)
+      body = {
+        new_password: params[:new],
+        old_password: params[:old]
+        }
+      @request.post(@url + '/transaction_auth/change_password', body)
+    end
+
+    def auth_transaction_password(params)
+      body = { password: params[:password] }
+      @request.post(@url + '/transaction_auth/authenticate', body)
+    end
   end
 end
