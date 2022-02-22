@@ -1,6 +1,5 @@
 module M2yNix
   class NixRegistration < NixModule
-
     def initialize(access_key = nil)
       @request = NixRequest.new(access_key)
       @url = M2yNix.configuration.server_url
@@ -36,7 +35,7 @@ module M2yNix
     def pj_account(params, access_token)
       body = {
         channel_code: params[:channel_code],
-        entity: "entity",
+        entity: 'entity',
         activity_code: params[:activity_code],
         user_id: params[:user_id],
         business_name: params[:business_name],
@@ -58,7 +57,7 @@ module M2yNix
         document_front: params[:document_front],
         selfie: params[:selfie]
       }
-      
+
       body[:state_registration] = params[:state_registration] if params[:state_registration].present?
       response = HTTParty.post(
         "#{@url}/companies",
@@ -106,8 +105,38 @@ module M2yNix
       p response
     end
 
-    def pf_document(params, access_token)
+    def update_pf_account(params, access_token)
+      body = {
+        phone: {
+          countryCode: params[:countryCode],
+          number: params[:number]
+        },
+        address: {
+          buildingNumber: params[:buildingNumber],
+          neighborhood: params[:neighborhood],
+          complement: params[:complement],
+          country: params[:country]
+          addressLine: params[:addressLine],
+          city: params[:city],
+          state: params[:state],
+          zipCode: params[:zipCode]
+        },
+        documentNumber: params[:documentNumber],
+        registerName: params[:registerName],
+        socialName: params[:socialName],
+        birthDate: params[:birthDate],
+        motherName: params[:motherName],
+        email: params[:email]
+      }
 
+      response = HTTParty.post(
+        "#{@url}/users/pf",
+        body: body,
+        headers: { 'Authorization': access_token }
+      )      
+    end
+
+    def pf_document(params, access_token)
       body = {
         'document_type' => params[:type],
         'selfie' => params[:selfie],
