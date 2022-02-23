@@ -129,7 +129,7 @@ module M2yNix
         motherName: params[:mother_name],
         email: params[:email]
       }
-      response = @request.put('https://nix-core-qa.cloudint.nexxera.com/api/v1' + USER_PATH + PF_PATH, body) 
+      response = @request.put(@url + USER_PATH + PF_PATH, body) 
     end
 
     def pf_document(params, access_token)
