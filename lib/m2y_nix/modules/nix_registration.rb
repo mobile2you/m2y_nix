@@ -104,7 +104,7 @@ module M2yNix
       p response
     end
 
-    def update_user_account(params)
+    def update_pf_account(params)
       address = params[:address]
 
       body = {
@@ -129,7 +129,27 @@ module M2yNix
         motherName: params[:mother_name],
         email: params[:email]
       }
-      response = @request.put(@url + USER_PATH + PF_PATH, body) 
+      response = @request.put('https://nix-core-qa.cloudint.nexxera.com/api/v1/users/pf', body) 
+    end
+
+    def update_pj_account(params)
+      address = params[:address]
+      body = {
+        state_registration: params[:entity],
+        business_name: params[:name],
+        business_trading_name: params[:fantasy_name],
+        business_address_number: address[:number],
+        business_address_neighborhood: address[:neighborhood],
+        business_address_complement: address[:complement],
+        business_address_country: address[:country],
+        business_address_line: address[:address_line],
+        business_address_city: address[:city],
+        business_address_state: address[:state],
+        business_address_zip_code: address[:zip_code],
+        business_type: params[:type],
+        business_size: params[:size]
+      }
+      response = @request.put("https://nix-core-qa.cloudint.nexxera.com/api/v1/companies/#{params[:user_id]}", body) 
     end
 
     def pf_document(params, access_token)
