@@ -27,7 +27,6 @@ module M2yNix
         address_state: address[:state],
         address_zip_code: address[:zip]
       }
-
       response = @request.post(@url + USER_PATH + CADUN_PATH, body)
       p response
     end
@@ -105,35 +104,32 @@ module M2yNix
       p response
     end
 
-    def update_pf_account(params, access_token)
+    def update_user_account(params)
+      address = params[:address]
+
       body = {
         phone: {
-          countryCode: params[:countryCode],
+          countryCode: params[:country_code],
           number: params[:number]
         },
         address: {
-          buildingNumber: params[:buildingNumber],
-          neighborhood: params[:neighborhood],
-          complement: params[:complement],
-          country: params[:country]
-          addressLine: params[:addressLine],
-          city: params[:city],
-          state: params[:state],
-          zipCode: params[:zipCode]
+          buildingNumber: address[:building_number],
+          neighborhood: address[:neighborhood],
+          complement: address[:complement],
+          country: address[:country],
+          addressLine: address[:address_line],
+          city: address[:city],
+          state: address[:state],
+          zipCode: address[:zip_code]
         },
-        documentNumber: params[:documentNumber],
-        registerName: params[:registerName],
-        socialName: params[:socialName],
-        birthDate: params[:birthDate],
-        motherName: params[:motherName],
+        documentNumber: params[:document_number],
+        registerName: params[:name],
+        socialName: params[:social_name],
+        birthDate: params[:birthdate],
+        motherName: params[:mother_name],
         email: params[:email]
       }
-
-      response = HTTParty.post(
-        "#{@url}/users/pf",
-        body: body,
-        headers: { 'Authorization': access_token }
-      )      
+      response = @request.put('https://nix-core-qa.cloudint.nexxera.com/api/v1' + USER_PATH + PF_PATH, body) 
     end
 
     def pf_document(params, access_token)
