@@ -23,5 +23,13 @@ module M2yNix
                           headers: @headers.merge(headers))
       req.parsed_response
     end
+
+    def put(url, body, headers = {})
+      puts url.to_s
+      req = HTTParty.put(url,
+                          body: body.to_json,
+                          headers: @headers.merge(headers))
+      req.parsed_response
+    end
   end
 end
