@@ -243,13 +243,17 @@ module M2yNix
         document_front: params[:document_front],
         document_back: params[:document_back]
       }
-      response = HTTParty.post(
-        "#{@url}/companies_mei_ei_eireli/documents",
-        body: body,
-        headers: {
-          'Authorization': access_token
-        }
-      )
+      url = URI("#{@url}/companies_mei_ei_eireli/documents")
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+      request = Net::HTTP::Post.new(url)
+      request["Authorization"] = access_token
+      form_data = [['document_front', File.open(params[:document_front])],
+                  ['document_back', File.open(params[:document_back])],
+                  ['document_type', params[:document_type] ]  
+                ]
+      request.set_form form_data, 'multipart/form-data'
+      response = https.request(request)
       response
     end
 
