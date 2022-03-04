@@ -239,7 +239,7 @@ module M2yNix
 
     def post_mei_documents(params, access_token)
       body = {
-        document_type: params[:type],
+        document_type: params[:document_type],
         document_front: params[:document_front],
         document_back: params[:document_back]
       }
