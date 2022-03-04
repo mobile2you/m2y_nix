@@ -236,5 +236,33 @@ module M2yNix
       p response
       response
     end
+
+    def post_mei_documents(params, access_token)
+      body = {
+        document_type: params[:type],
+        document_front: params[:document_front],
+        document_back: params[:document_back]
+      }
+      response = HTTParty.post(
+        "#{@url}/companies_mei_ei_eireli/documents",
+        body: body,
+        headers: {
+          'Authorization': access_token
+        }
+      )
+      response
+    end
+
+    def post_mei_selfie(params, access_token)
+      url = URI("#{@url}/companies_mei_ei_eireli/selfie")
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+      request = Net::HTTP::Post.new(url)
+      request["Authorization"] = access_token
+      form_data = [['selfie', File.open(params[:selfie])]]
+      request.set_form form_data, 'multipart/form-data'
+      response = https.request(request)
+      response
+    end
   end
 end
