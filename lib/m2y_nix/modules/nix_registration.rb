@@ -57,6 +57,7 @@ module M2yNix
       form_data << ['representative_address_city', params[:representative_address_city]]
       form_data << ['representative_address_state', params[:representative_address_state]]
       form_data << ['representative_address_zip_code', params[:representative_address_zip_code]]
+      form_data << ['representative_password', params[:representative_password]]
       form_data << ['business_name', params[:business_name]]
       form_data << ['cnpj', params[:cnpj]]
       form_data << ['business_email', params[:business_email]]
