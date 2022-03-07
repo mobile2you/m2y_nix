@@ -1,3 +1,6 @@
+require 'net/http'
+require 'uri'
+
 module M2yNix
   class NixRegistration < NixModule
     def initialize(access_key = nil)
@@ -29,6 +32,49 @@ module M2yNix
       }
       response = @request.post(@url + USER_PATH + CADUN_PATH, body)
       p response
+    end
+
+    def sa_ltda_account(params)
+      url = URI("#{@url}/companies_sa_ltda")
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+      request = Net::HTTP::Post.new(url)
+      form_data = []
+      form_data << ['channel_code', params[:channel_code]]
+      form_data << ['activity_code', params[:activity_code]]
+      form_data << ['representative_register_name', params[:representative_register_name]]
+      form_data << ['cpf', params[:cpf]]
+      form_data << ['representative_email', params[:representative_email]]
+      form_data << ['representative_phone_number', params[:representative_phone_number]]
+      form_data << ['representative_birth_date', params[:representative_birth_date]]
+      form_data << ['representative_mother_name', params[:representative_mother_name]]
+      form_data << ['representative_social_name', params[:representative_social_name]]
+      form_data << ['representative_phone_country_code', params[:representative_phone_country_code]]
+      form_data << ['representative_address_number', params[:representative_address_number]]
+      form_data << ['representative_address_neighborhood', params[:representative_address_neighborhood]]
+      form_data << ['representative_address_complement', params[:representative_address_complement]]
+      form_data << ['representative_address_line', params[:representative_address_line]]
+      form_data << ['representative_address_city', params[:representative_address_city]]
+      form_data << ['representative_address_state', params[:representative_address_state]]
+      form_data << ['representative_address_zip_code', params[:representative_address_zip_code]]
+      form_data << ['representative_password', params[:representative_password]]
+      form_data << ['business_name', params[:business_name]]
+      form_data << ['cnpj', params[:cnpj]]
+      form_data << ['business_email', params[:business_email]]
+      form_data << ['business_type', params[:business_type]]
+      form_data << ['business_size', params[:business_size]]
+      form_data << ['business_trading_name', params[:business_trading_name]]
+      form_data << ['business_address_number', params[:business_address_number]]
+      form_data << ['business_address_neighborhood', params[:business_address_neighborhood]]
+      form_data << ['business_address_line', params[:business_address_line]]
+      form_data << ['business_address_city', params[:business_address_city]]
+      form_data << ['business_address_state', params[:business_address_state]]
+      form_data << ['business_address_complement', params[:business_address_complement]]
+      form_data << ['business_address_zip_code', params[:business_address_zip_code]]
+      form_data << ['documents', (params[:documents]).to_s]
+      request.set_form form_data, 'multipart/form-data'
+
+      https.request(request)
     end
 
     def pj_account(params, access_token)
@@ -103,7 +149,6 @@ module M2yNix
       response = @request.post(@url + USER_PATH + PF_PATH, body)
       p response
     end
-
     def update_pf_account(params)
       address = params[:address]
 
@@ -190,6 +235,38 @@ module M2yNix
         }
       )
       p response
+      response
+    end
+
+    def post_mei_documents(params, access_token)
+      body = {
+        document_type: params[:document_type],
+        document_front: params[:document_front],
+        document_back: params[:document_back]
+      }
+      url = URI("#{@url}/companies_mei_ei_eireli/documents")
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+      request = Net::HTTP::Post.new(url)
+      request["Authorization"] = access_token
+      form_data = [['document_front', File.open(params[:document_front])],
+                  ['document_back', File.open(params[:document_back])],
+                  ['document_type', params[:document_type] ]  
+                ]
+      request.set_form form_data, 'multipart/form-data'
+      response = https.request(request)
+      response
+    end
+
+    def post_mei_selfie(params, access_token)
+      url = URI("#{@url}/companies_mei_ei_eireli/selfie")
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+      request = Net::HTTP::Post.new(url)
+      request["Authorization"] = access_token
+      form_data = [['selfie', File.open(params[:selfie])]]
+      request.set_form form_data, 'multipart/form-data'
+      response = https.request(request)
       response
     end
   end
