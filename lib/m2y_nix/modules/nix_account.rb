@@ -64,5 +64,10 @@ module M2yNix
       body = { password: params[:password] }
       @request.post(@url + '/transaction_auth/authenticate', body)
     end
+
+    def reset_pass(params)
+      body = { user: params[:cpf] }
+      @request.post('https://apigateway-qa.nexxera.com/nix/cadun/empresas/user/reset_password', body)
+    end
   end
 end

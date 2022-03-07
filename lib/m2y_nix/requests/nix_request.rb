@@ -20,8 +20,8 @@ module M2yNix
       puts url.to_s
       req = HTTParty.post(url,
                           body: body.to_json,
-                          headers: @headers.merge(headers))
-      req.parsed_response
+                          headers: @headers.merge(headers))                          
+      { status: req.code }.merge req.parsed_response
     end
 
     def put(url, body, headers = {})
