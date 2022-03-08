@@ -13,7 +13,12 @@ module M2yNix
     def get(url, query_params = {})
       puts url.to_s
       req = HTTParty.get(url, headers: @headers, query: query_params)
-      { status: req.code }.merge req.parsed_response
+      if req.parsed_response.is_a?(Array)
+        req.parsed_response.first['response_status'] = req.code
+      else 
+        req.parsed_response['response_status'] = req.code
+      end
+      req.parsed_response
     end
 
     def post(url, body, headers = {})
