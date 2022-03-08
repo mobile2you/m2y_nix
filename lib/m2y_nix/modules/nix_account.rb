@@ -49,7 +49,11 @@ module M2yNix
 
     def transaction_password(params)
       body = { password: params[:password] }
-      @request.post(@url + '/transaction_auth', body)
+      @request.post('https://nix-core-qa.cloudint.nexxera.com/api/v1/transaction_auth', body)
+    end
+
+    def transaction_password_exist
+      @request.get('https://nix-core-qa.cloudint.nexxera.com/api/v1/transaction_auth/exists')
     end
 
     def change_transaction_password(params)
