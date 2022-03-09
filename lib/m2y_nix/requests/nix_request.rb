@@ -15,10 +15,14 @@ module M2yNix
       req = HTTParty.get(url, headers: @headers, query: query_params)
       if req.parsed_response.is_a?(Array)
         req.parsed_response.first['response_status'] = req.code
+        response = req.parsed_response
+      elsif req.parsed_response.blank?
+        response = { code: req.code}
       else 
         req.parsed_response['response_status'] = req.code
+        response = req.parsed_response
       end
-      req.parsed_response
+      response
     end
 
     def post(url, body, headers = {})
@@ -26,7 +30,16 @@ module M2yNix
       req = HTTParty.post(url,
                           body: body.to_json,
                           headers: @headers.merge(headers))
-      { status: req.code }.merge req.parsed_response
+      if req.parsed_response.is_a?(Array)
+        req.parsed_response.first['response_status'] = req.code
+        response = req.parsed_response
+      elsif req.parsed_response.blank?
+        response = { code: req.code}
+      else 
+        req.parsed_response['response_status'] = req.code
+        response = req.parsed_response
+      end
+      response
     end
 
     def put(url, body, headers = {})
