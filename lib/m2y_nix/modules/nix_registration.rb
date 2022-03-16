@@ -45,6 +45,7 @@ module M2yNix
       form_data << ['representative_register_name', params[:representative_register_name]]
       form_data << ['cpf', params[:cpf]]
       form_data << ['representative_email', params[:representative_email]]
+      form_data << ['state_registration', params[:state_registration]]
       form_data << ['representative_phone_number', params[:representative_phone_number]]
       form_data << ['representative_birth_date', params[:representative_birth_date]]
       form_data << ['representative_mother_name', params[:representative_mother_name]]
