@@ -41,6 +41,7 @@ module M2yNix
         req.parsed_response['response_status'] = req.code
         response = req.parsed_response
       end
+      return req.parsed_response if url.include?('companies_sa_ltda')
       response
     end
 
