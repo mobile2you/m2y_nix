@@ -53,7 +53,7 @@ module M2yNix
       form_data << ['representative_phone_country_code', params[:representative_phone_country_code]]
       form_data << ['representative_address_number', params[:representative_address_number]]
       form_data << ['representative_address_neighborhood', params[:representative_address_neighborhood]]
-      form_data << ['representative_address_complement', params[:representative_address_complement]]
+      form_data << ['representative_address_complement', params[:representative_address_complement]] if params[:representative_address_complement].present?
       form_data << ['representative_address_line', params[:representative_address_line]]
       form_data << ['representative_address_city', params[:representative_address_city]]
       form_data << ['representative_address_state', params[:representative_address_state]]
@@ -70,11 +70,10 @@ module M2yNix
       form_data << ['business_address_line', params[:business_address_line]]
       form_data << ['business_address_city', params[:business_address_city]]
       form_data << ['business_address_state', params[:business_address_state]]
-      form_data << ['business_address_complement', params[:business_address_complement]]
+      form_data << ['business_address_complement', params[:business_address_complement]] if params[:business_address_complement].present?
       form_data << ['business_address_zip_code', params[:business_address_zip_code]]
       form_data << ['documents', (params[:documents]).to_s]
       request.set_form form_data, 'multipart/form-data'
-
       https.request(request)
     end
 
