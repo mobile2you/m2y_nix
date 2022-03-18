@@ -32,6 +32,7 @@ module M2yNix
                           body: body.to_json,
                           headers: @headers.merge(headers))
       if req.parsed_response.is_a?(Array)
+        return req.parsed_response if req.parsed_response.first.blank?
         req.parsed_response.first['response_status'] = req.code
         response = req.parsed_response
       elsif req.parsed_response.blank?
