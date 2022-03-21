@@ -40,39 +40,39 @@ module M2yNix
       https.use_ssl = true
       request = Net::HTTP::Post.new(url)
       form_data = []
-      form_data << ['channel_code', params[:channel_code]]
-      form_data << ['activity_code', params[:activity_code]]
-      form_data << ['representative_register_name', params[:representative_register_name]]
-      form_data << ['cpf', params[:cpf]]
-      form_data << ['representative_email', params[:representative_email]]
-      form_data << ['state_registration', params[:state_registration]]
-      form_data << ['representative_phone_number', params[:representative_phone_number]]
-      form_data << ['representative_birth_date', params[:representative_birth_date]]
-      form_data << ['representative_mother_name', params[:representative_mother_name]]
-      form_data << ['representative_social_name', params[:representative_social_name]]
-      form_data << ['representative_phone_country_code', params[:representative_phone_country_code]]
-      form_data << ['representative_address_number', params[:representative_address_number]]
-      form_data << ['representative_address_neighborhood', params[:representative_address_neighborhood]]
+      form_data << ['channel_code', params[:channel_code]] if params[:channel_code].present?
+      form_data << ['activity_code', params[:activity_code]] if params[:activity_code].present?
+      form_data << ['representative_register_name', params[:representative_register_name]] if params[:representative_register_name].present?
+      form_data << ['cpf', params[:cpf]] if params[:cpf].present?
+      form_data << ['representative_email', params[:representative_email]] if params[:representative_email].present?
+      form_data << ['state_registration', params[:state_registration]] if params[:state_registration].present?
+      form_data << ['representative_phone_number', params[:representative_phone_number]] if params[:representative_phone_number].present?
+      form_data << ['representative_birth_date', params[:representative_birth_date]] if params[:representative_birth_date].present?
+      form_data << ['representative_mother_name', params[:representative_mother_name]] if params[:representative_mother_name].present?
+      form_data << ['representative_social_name', params[:representative_social_name]] if params[:representative_social_name].present?
+      form_data << ['representative_phone_country_code', params[:representative_phone_country_code]] if params[:representative_phone_country_code].present?
+      form_data << ['representative_address_number', params[:representative_address_number]] if params[:representative_address_number].present?
+      form_data << ['representative_address_neighborhood', params[:representative_address_neighborhood]] if params[:representative_address_neighborhood].present?
       form_data << ['representative_address_complement', params[:representative_address_complement]] if params[:representative_address_complement].present?
-      form_data << ['representative_address_line', params[:representative_address_line]]
-      form_data << ['representative_address_city', params[:representative_address_city]]
-      form_data << ['representative_address_state', params[:representative_address_state]]
-      form_data << ['representative_address_zip_code', params[:representative_address_zip_code]]
-      form_data << ['representative_password', params[:representative_password]]
-      form_data << ['business_name', params[:business_name]]
-      form_data << ['cnpj', params[:cnpj]]
-      form_data << ['business_email', params[:business_email]]
-      form_data << ['business_type', params[:business_type]]
-      form_data << ['business_size', params[:business_size]]
-      form_data << ['business_trading_name', params[:business_trading_name]]
-      form_data << ['business_address_number', params[:business_address_number]]
-      form_data << ['business_address_neighborhood', params[:business_address_neighborhood]]
-      form_data << ['business_address_line', params[:business_address_line]]
-      form_data << ['business_address_city', params[:business_address_city]]
-      form_data << ['business_address_state', params[:business_address_state]]
-      form_data << ['business_address_complement', params[:business_address_complement]] if params[:business_address_complement].present?
-      form_data << ['business_address_zip_code', params[:business_address_zip_code]]
-      form_data << ['documents', (params[:documents]).to_s]
+      form_data << ['representative_address_line', params[:representative_address_line]] if params[:representative_address_line].present?
+      form_data << ['representative_address_city', params[:representative_address_city]] if params[:representative_address_city].present?
+      form_data << ['representative_address_state', params[:representative_address_state]] if params[:representative_address_state].present?
+      form_data << ['representative_address_zip_code', params[:representative_address_zip_code]] if params[:representative_address_zip_code].present?
+      form_data << ['representative_password', params[:representative_password]] if params[:representative_password].present?
+      form_data << ['business_name', params[:business_name]] if params[:business_name].present?
+      form_data << ['cnpj', params[:cnpj]] if params[:cnpj].present?
+      form_data << ['business_email', params[:business_email]] if params[:business_email].present?
+      form_data << ['business_type', params[:business_type]] if params[:business_type].present?
+      form_data << ['business_size', params[:business_size]] if params[:business_size].present?
+      form_data << ['business_trading_name', params[:business_trading_name]] if params[:business_trading_name].present?
+      form_data << ['business_address_number', params[:business_address_number]] if params[:business_address_number].present?
+      form_data << ['business_address_neighborhood', params[:business_address_neighborhood]] if params[:business_address_neighborhood].present?
+      form_data << ['business_address_line', params[:business_address_line]] if params[:business_address_line].present?
+      form_data << ['business_address_city', params[:business_address_city]] if params[:business_address_city].present?
+      form_data << ['business_address_state', params[:business_address_state]] if params[:business_address_state].present?
+      form_data << ['business_address_complement', params[:business_address_complement]] if params[:business_address_complement].present? 
+      form_data << ['business_address_zip_code', params[:business_address_zip_code]] if params[:business_address_zip_code].present?
+      form_data << ['documents', (params[:documents]).to_s] if params[:documents].present?
       request.set_form form_data, 'multipart/form-data'
       https.request(request)
     end
