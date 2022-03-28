@@ -18,13 +18,7 @@ module M2yNix
         recipient_account_type: 'CHECKING', # Verificar o que podemos mandar nesse campo
         recipient_bank_name: recipient[:bank][:name]
       }
-
-      if recipient[:bank][:code] == "332"
-        response = @request.post(@url + ACCOUNT_PATH + TRANSFER_PATH, body)
-      else
-        response = @request.post(@url + ACCOUNT_PATH + TRANSFER_PATH + '/bank', body)
-      end
-
+      response = @request.post(@url + ACCOUNT_PATH + TRANSFER_PATH + '/bank', body)
       response
     end
 
