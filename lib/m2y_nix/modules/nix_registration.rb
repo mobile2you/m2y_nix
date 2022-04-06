@@ -45,15 +45,15 @@ module M2yNix
       form_data << ['representative_register_name', params[:representative_register_name]] if params[:representative_register_name].present?
       form_data << ['cpf', params[:cpf]] if params[:cpf].present?
       form_data << ['representative_email', params[:representative_email]] if params[:representative_email].present?
-      form_data << ['state_registration', params[:state_registration]] if params[:state_registration].present?
+      form_data << ['state_registration', params[:state_registration].present? ? params[:state_registration] : '']
       form_data << ['representative_phone_number', params[:representative_phone_number]] if params[:representative_phone_number].present?
       form_data << ['representative_birth_date', params[:representative_birth_date]] if params[:representative_birth_date].present?
       form_data << ['representative_mother_name', params[:representative_mother_name]] if params[:representative_mother_name].present?
       form_data << ['representative_social_name', params[:representative_social_name]] if params[:representative_social_name].present?
-      form_data << ['representative_phone_country_code', params[:representative_phone_country_code]] if params[:representative_phone_country_code].present?
+      form_data << ['representative_phone_country_code', '55']
       form_data << ['representative_address_number', params[:representative_address_number]] if params[:representative_address_number].present?
       form_data << ['representative_address_neighborhood', params[:representative_address_neighborhood]] if params[:representative_address_neighborhood].present?
-      form_data << ['representative_address_complement', params[:representative_address_complement]] if params[:representative_address_complement].present?
+      form_data << ['representative_address_complement', params[:representative_address_complement].present? ? params[:representative_address_complement] : '']
       form_data << ['representative_address_line', params[:representative_address_line]] if params[:representative_address_line].present?
       form_data << ['representative_address_city', params[:representative_address_city]] if params[:representative_address_city].present?
       form_data << ['representative_address_state', params[:representative_address_state]] if params[:representative_address_state].present?
@@ -70,7 +70,7 @@ module M2yNix
       form_data << ['business_address_line', params[:business_address_line]] if params[:business_address_line].present?
       form_data << ['business_address_city', params[:business_address_city]] if params[:business_address_city].present?
       form_data << ['business_address_state', params[:business_address_state]] if params[:business_address_state].present?
-      form_data << ['business_address_complement', params[:business_address_complement]] if params[:business_address_complement].present? 
+      form_data << ['business_address_complement', params[:business_address_complement].present? ? params[:business_address_complement] : '']
       form_data << ['business_address_zip_code', params[:business_address_zip_code]] if params[:business_address_zip_code].present?
       form_data << ['documents', (params[:documents]).to_s] if params[:documents].present?
       request.set_form form_data, 'multipart/form-data'
@@ -80,7 +80,7 @@ module M2yNix
     def pj_account(params, access_token)
       body = {
         channel_code: params[:channel_code],
-        entity: 'entity',
+        entity: "1",
         activity_code: params[:activity_code],
         user_id: params[:user_id],
         business_name: params[:business_name],
@@ -127,7 +127,6 @@ module M2yNix
         business_size: params[:business_size],
         business_address_number: params[:business_address_number],
         business_address_neighborhood: params[:business_address_neighborhood],
-        business_address_complement: params[:business_address_complement],
         business_address_country: params[:business_address_country],
         business_address_line: params[:business_address_line],
         business_address_city: params[:business_address_city],
@@ -135,8 +134,9 @@ module M2yNix
         business_address_zip_code: params[:business_address_zip_code]
       }
 
-      body[:state_registration] = params[:state_registration] if params[:state_registration].present?
-      body[:entity] = params[:entity] if params[:entity].present?
+      body[:state_registration] = params[:state_registration].present? ? params[:state_registration] : ""
+      body[:entity] = params[:entity].present? ? params[:entity] : ""
+      body[:business_address_complement] = params[:business_address_complement].present? ? params[:business_address_complement] : ""
       response = HTTParty.post(
         "#{@url}/companies_mei_ei_eireli/create",
         body: body,
