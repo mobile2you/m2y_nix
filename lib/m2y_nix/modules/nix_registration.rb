@@ -135,7 +135,7 @@ module M2yNix
       }
 
       body[:state_registration] = params[:state_registration].present? ? params[:state_registration] : ""
-      body[:entity] = params[:entity].present? ? params[:entity] : ""
+      body[:entity] =  "1"
       body[:business_address_complement] = params[:business_address_complement].present? ? params[:business_address_complement] : ""
       response = HTTParty.post(
         "#{@url}/companies_mei_ei_eireli/create",
