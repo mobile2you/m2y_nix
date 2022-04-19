@@ -4,6 +4,7 @@ module M2yNix
     end
 
     def self.auth(username, password)
+      @url = M2yNix.configuration.server_url
       if @url.include?('qa')
         response = HTTParty.post(
           'https://apigateway-qa.nexxera.com/nix/cadun/empresas/auth',
@@ -19,6 +20,7 @@ module M2yNix
     end
 
     def self.refresh(token)
+      @url = M2yNix.configuration.server_url
       if @url.include?('qa')
         response = HTTParty.post(
         'https://apigateway-qa.nexxera.com/nix/cadun/empresas/auth/refresh',
