@@ -4,18 +4,33 @@ module M2yNix
     end
 
     def self.auth(username, password)
-      HTTParty.post(
-        'https://apigateway-qa.nexxera.com/nix/cadun/empresas/auth',
-        body: { user: username, password: password }
-      )
+      if @url.include?('qa')
+        response = HTTParty.post(
+          'https://apigateway-qa.nexxera.com/nix/cadun/empresas/auth',
+          body: { user: username, password: password }
+        )
+      else
+        response = HTTParty.post(
+          'https://apigateway.nexxera.com/nix/cadun/empresas/auth',
+          body: { user: username, password: password }
+        )
+      end
+      response
     end
 
     def self.refresh(token)
-      p @url
-      HTTParty.post(
+      if @url.include?('qa')
+        response = HTTParty.post(
         'https://apigateway-qa.nexxera.com/nix/cadun/empresas/auth/refresh',
         headers: { 'Refresh-Token': token }
-      )
+        )
+      else
+        response = HTTParty.post(
+        'https://apigateway.nexxera.com/nix/cadun/empresas/auth/refresh',
+        headers: { 'Refresh-Token': token }
+        )
+      end
+      response
     end
   end
 end
