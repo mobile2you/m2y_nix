@@ -117,7 +117,7 @@ module M2yNix
     def mei(params, access_token)
       body = {
         channel_code: params[:channel_code],
-        activity_code: params[:activity_code],
+        activity_code: params[:activity_code].to_i,
         user_id: params[:user_id],
         business_name: params[:business_name],
         cnpj: params[:cnpj],
