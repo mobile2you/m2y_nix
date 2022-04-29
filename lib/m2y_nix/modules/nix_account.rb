@@ -49,11 +49,11 @@ module M2yNix
 
     def transaction_password(params)
       body = { password: params[:password] }
-      @request.post('https://nix-core-qa.cloudint.nexxera.com/api/v1/transaction_auth', body)
+      @request.post(@url + '/transaction_auth', body)
     end
 
     def transaction_password_exist
-      @request.get('https://nix-core-qa.cloudint.nexxera.com/api/v1/transaction_auth/exists')
+      @request.get(@url + '/transaction_auth/exists')
     end
 
     def change_transaction_password(params)
@@ -71,7 +71,12 @@ module M2yNix
 
     def reset_pass(params)
       body = { user: params[:cpf] }
-      @request.post('https://apigateway-qa.nexxera.com/nix/cadun/empresas/user/reset_password', body)
+      if @url.include?('qa')  
+        response = @request.post('https://apigateway-qa.nexxera.com/nix/cadun/empresas/user/reset_password', body)
+      else
+        response = @request.post('https://apigateway.nexxera.com/nix/cadun/empresas/user/reset_password', body)
+      end
+      response
     end
   end
 end
