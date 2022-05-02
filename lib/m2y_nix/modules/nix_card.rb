@@ -42,20 +42,12 @@ module M2yNix
       HTTParty.patch("#{@url}#{CARD_PATH}/password",body: body, headers: headers)
     end
 
-    def sensitive_info(body, access_key)
-      headers = {
-        'Authorization': access_key,
-        'Content-Type' => 'application/json'
-      }
-      @request.post("#{@url}#{CARD_PATH}/pci",body: body, headers: headers)
+    def sensitive_info(body)
+      @request.post("#{@url}#{CARD_PATH}/pci",body: body)
     end
 
-    def statement(body, access_key)
-      headers = {
-        'Authorization': access_key,
-        'Content-Type' => 'application/json'
-      }
-      @request.get("#{@url}#{CARD_PATH}/statement",body: body, headers: headers)
+    def statement(body)
+      @request.get("#{@url}#{CARD_PATH}/statement",body: body)
     end
   end
 end
