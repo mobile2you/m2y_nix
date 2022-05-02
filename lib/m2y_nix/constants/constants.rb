@@ -14,7 +14,6 @@ module M2yNix
   PAYMENT_PATH = '/payments'
   #Transfer
   TRANSFER_PATH = '/transfer'
-  CARD_PATH = '/cards'
 
   ### Cadun Paths
 

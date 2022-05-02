@@ -10,28 +10,52 @@ module M2yNix
       @request.post("#{@url}#{CARD_PATH}/virtual", body)
     end
 
-    def get_virtual(body)
-      @request.get("#{@url}#{CARD_PATH}/virtual", body)
+    def get_virtual(access_key)
+      headers = {
+        'Authorization': access_key,
+        'Content-Type' => 'application/json'
+      }
+      HTTParty.get("#{@url}#{CARD_PATH}/virtual", headers: headers)
     end
 
-    def activate(body)
-      HTTParty.patch("#{@url}#{CARD_PATH}/activate", body)
+    def activate(body, access_key)
+      headers = {
+        'Authorization': access_key,
+        'Content-Type' => 'application/json'
+      }
+      HTTParty.patch("#{@url}#{CARD_PATH}/activate",body: body, headers: headers)
     end
 
-    def cancel(body)
-      HTTParty.patch("#{@url}#{CARD_PATH}/cancel", body)
+    def cancel(body, access_key)
+      headers = {
+        'Authorization': access_key,
+        'Content-Type' => 'application/json'
+      }
+      HTTParty.patch("#{@url}#{CARD_PATH}/cancel",body: body, headers: headers)
     end
 
-    def change_password(body)
-      HTTParty.patch("#{@url}#{CARD_PATH}/password", body)
+    def change_password(body, access_key)
+      headers = {
+        'Authorization': access_key,
+        'Content-Type' => 'application/json'
+      }
+      HTTParty.patch("#{@url}#{CARD_PATH}/password",body: body, headers: headers)
     end
 
-    def sensitive_info(body)
-      @request.post("#{@url}#{CARD_PATH}/pci", body)
+    def sensitive_info(body, access_key)
+      headers = {
+        'Authorization': access_key,
+        'Content-Type' => 'application/json'
+      }
+      @request.post("#{@url}#{CARD_PATH}/pci",body: body, headers: headers)
     end
 
-    def statement(body)
-      @request.get("#{@url}#{CARD_PATH}/statement", body)
+    def statement(body, access_key)
+      headers = {
+        'Authorization': access_key,
+        'Content-Type' => 'application/json'
+      }
+      @request.get("#{@url}#{CARD_PATH}/statement",body: body, headers: headers)
     end
   end
 end
