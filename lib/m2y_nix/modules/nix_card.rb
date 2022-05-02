@@ -43,11 +43,11 @@ module M2yNix
     end
 
     def sensitive_info(body)
-      @request.post("#{@url}#{CARD_PATH}/pci",body: body)
+      @request.post(@url + CARD_PATH + '/pci', body)
     end
 
     def statement(body)
-      @request.get("#{@url}#{CARD_PATH}/statement",body: body)
+      @request.get("#{@url}#{CARD_PATH}/statement", body)
     end
   end
 end
