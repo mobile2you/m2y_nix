@@ -47,7 +47,7 @@ module M2yNix
     end
 
     def statement(body)
-      @request.get("#{@url}#{CARD_PATH}/statement", body)
+      @request.get(@url + CARD_PATH + '/statement', body)
     end
   end
 end
