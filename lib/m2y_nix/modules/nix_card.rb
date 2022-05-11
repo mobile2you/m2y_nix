@@ -49,5 +49,9 @@ module M2yNix
     def statement(body)
       @request.get(@url + CARD_PATH + '/statement', body)
     end
+
+    def get_physical
+      @request.get(@url + CARD_PATH + '/physical')
+    end
   end
 end
