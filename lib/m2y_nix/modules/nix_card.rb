@@ -7,7 +7,7 @@ module M2yNix
     end
 
     def create(body)
-      @request.post("#{@url}#{CARD_PATH}/#{body[:card_type].downcase}", body.expect!(:card_type))
+      @request.post("#{@url}#{CARD_PATH}/#{body[:card_type].downcase}", body.except!(:card_type))
     end
 
     def get_virtual(access_key)
