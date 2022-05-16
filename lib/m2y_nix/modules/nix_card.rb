@@ -23,7 +23,7 @@ module M2yNix
     end
 
     def contactless_control(body)
-      HTTParty.patch("#{url}#{CARD_PATH}/contactless", body, headers: @headers)
+      HTTParty.patch("#{@url}#{CARD_PATH}/contactless", body, headers: @headers)
     end
 
     def cancel(body, access_key)
