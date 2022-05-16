@@ -47,6 +47,10 @@ module M2yNix
       @request.get(@url + '/companies')
     end
 
+    def user
+      @request.get(@url + '/users' + '/list')
+    end
+
     def transaction_password(params)
       body = { password: params[:password] }
       @request.post(@url + '/transaction_auth', body)
