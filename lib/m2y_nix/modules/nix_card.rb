@@ -26,6 +26,14 @@ module M2yNix
       HTTParty.patch("#{@url}#{CARD_PATH}/activate", body: body, headers: headers)
     end
 
+    def contactless_control(body, access_key)
+      headers = {
+        'Authorization': access_key,
+        'Content-Type' => 'application/json'
+      }
+      HTTParty.patch("#{@url}#{CARD_PATH}/contactless", body: body, headers: headers)
+    end
+
     def cancel(body, access_key)
       headers = {
         'Authorization': access_key,
