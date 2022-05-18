@@ -13,5 +13,9 @@ module M2yNix
     def account_keys
       @request.get("#{@url}/pix/key_by_account")
     end
+
+    def account_info_by_key(adressing_key)
+      @request.get("#{@url}/pix/addressing/#{adressing_key}")
+    end
   end
 end
