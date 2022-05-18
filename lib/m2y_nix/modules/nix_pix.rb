@@ -9,5 +9,9 @@ module M2yNix
     def create_key(body)
       @request.post("#{@url}/pix/create_key", body)
     end
+
+    def account_keys
+      @request.get("#{@url}/pix/key_by_account")
+    end
   end
 end
