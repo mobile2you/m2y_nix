@@ -40,5 +40,17 @@ module M2yNix
         }
       )
     end
+
+    def delete_key(key)
+      url = @url + '/pix/delete_key/' + key.to_s
+      puts url 
+      HTTParty.delete(
+        url,
+        headers: {
+          Authorization: @token,
+          'Content-Type' => 'application/json'
+        }
+      )
+    end
   end
 end
