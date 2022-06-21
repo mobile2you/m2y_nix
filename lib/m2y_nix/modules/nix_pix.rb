@@ -18,10 +18,21 @@ module M2yNix
     def account_info_by_key(adressing_key)
       @request.get("#{@url}/pix/addressing/#{adressing_key}")
     end 
-    
+
     def cash_out_key(body)
       HTTParty.post(
         @url + '/pix/cash_out/key',
+        body: body,
+        headers: {
+          Authorization: @token,
+          'Content-Type' => 'application/json'
+        }
+      )
+    end
+
+    def home_qr_code(body)
+      HTTParty.post(
+        @url + '/pix/qrcode/static/home',
         body: body,
         headers: {
           Authorization: @token,
