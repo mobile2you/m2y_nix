@@ -4,6 +4,7 @@ module M2yNix
   class NixPix < NixModule
     def initialize(access_key)
       startModule(access_key)
+      @token = access_key
     end
 
     def create_key(body)
@@ -16,6 +17,17 @@ module M2yNix
 
     def account_info_by_key(adressing_key)
       @request.get("#{@url}/pix/addressing/#{adressing_key}")
+    end 
+    
+    def cash_out_key(body)
+      HTTParty.post(
+        @url + '/pix/cash_out/key',
+        body: body,
+        headers: {
+          Authorization: @token,
+          'Content-Type' => 'application/json'
+        }
+      )
     end
   end
 end
