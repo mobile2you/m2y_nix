@@ -36,6 +36,7 @@ module M2yNix
         limit: params[:limit],
         offset: params[:offset]
       }
+      body[:event_model] = params[:event_model] if params[:event_model].present?
       @request.get(@url + ACCOUNT_PATH + STATEMENT_PATH, body)
     end
 
