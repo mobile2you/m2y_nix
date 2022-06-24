@@ -30,6 +30,17 @@ module M2yNix
       )
     end
 
+    def pix_manual(body)
+      HTTParty.post(
+        @url + '/pix/manual',
+        body: body,
+        headers: {
+          Authorization: @token,
+          'Content-Type' => 'application/json'
+        }
+      )
+    end
+
     def home_qr_code(body)
       HTTParty.post(
         @url + '/pix/qrcode/static/home',
