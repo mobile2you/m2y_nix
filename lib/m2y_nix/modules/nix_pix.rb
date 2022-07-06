@@ -52,6 +52,17 @@ module M2yNix
       )
     end
 
+    def static_qr_code(body)
+      HTTParty.post(
+        @url + '/pix/qrcode/static',
+        body: body,
+        headers: {
+          Authorization: @token,
+          'Content-Type' => 'application/json'
+        }
+      )
+    end
+
     def delete_key(key)
       url = @url + '/pix/delete_key/' + key.to_s
       puts url 
