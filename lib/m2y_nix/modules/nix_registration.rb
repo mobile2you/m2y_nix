@@ -302,5 +302,15 @@ module M2yNix
       response = https.request(request)
       response
     end
+
+    def cnae
+      HTTParty.get(
+        'https://apigateway-qa.nexxera.com/nix/companies/categories', # @url + '/companies/categories'
+        headers: {
+          Authorization: @token,
+          'Content-Type' => 'application/json'
+        }
+      )
+    end
   end
 end
