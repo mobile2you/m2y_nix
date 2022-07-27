@@ -4,6 +4,7 @@ module M2yNix
   class NixCard < NixModule
     def initialize(access_key)
       startModule(access_key)
+      @token = access_key
     end
 
     def create(body)
@@ -51,7 +52,14 @@ module M2yNix
     end
 
     def sensitive_info(body)
-      @request.post(@url + CARD_PATH + '/pci', body)
+      HTTParty.post(
+        @url + CARD_PATH + '/pci',
+        body: body,
+        headers: {
+          'Authorization': @token,
+          'Content-Type' => 'application/json'
+        }
+      )
     end
 
     def statement(body)
