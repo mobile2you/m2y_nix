@@ -30,6 +30,17 @@ module M2yNix
       )
     end
 
+    def cash_out_schedule(body)
+      HTTParty.post(
+        @url + '/pix/cash-out/schedule',
+        body: body,
+        headers: {
+          Authorization: @token,
+          'Content-Type' => 'application/json'
+        }
+      )
+    end
+
     def pix_manual(body)
       HTTParty.post(
         @url + '/pix/manual',
