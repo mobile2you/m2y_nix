@@ -2,6 +2,7 @@ module M2yNix
   class NixAccount < NixModule
     def initialize(access_key)
       startModule(access_key)
+      @token = access_key
     end
 
     def balance
@@ -82,6 +83,17 @@ module M2yNix
         response = @request.post('https://apigateway.nexxera.com/nix/cadun/empresas/user/reset_password', body)
       end
       response
+    end
+
+    def scheduled(params)
+      HTTParty.get(
+        @url + '/accounts/schedule/list',
+        query: params,
+        headers: {
+          Authorization: @token,
+          'Content-Type' => 'application/json'
+        }
+      )
     end
   end
 end
