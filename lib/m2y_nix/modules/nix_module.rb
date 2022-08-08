@@ -1,5 +1,4 @@
 module M2yNix
-
   class NixModule
     def startModule(access_key)
       @request = NixRequest.new(access_key)
@@ -10,5 +9,4 @@ module M2yNix
       NixHelper.generate_general_response(input)
     end
   end
-
 end

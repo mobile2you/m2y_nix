@@ -96,5 +96,30 @@ module M2yNix
         }
       )
     end
+
+    def limits(body)
+      url = @url + '/limits'
+      puts url 
+      HTTParty.put(
+        url,
+        body: body
+        headers: {
+          Authorization: @token,
+          'Content-Type' => 'application/json'
+        }
+      )
+    end
+
+    def list_limits
+      url = @url + '/limits/list'
+      puts url 
+      HTTParty.get(
+        url,
+        headers: {
+          Authorization: @token,
+          'Content-Type' => 'application/json'
+        }
+      )
+    end
   end
 end

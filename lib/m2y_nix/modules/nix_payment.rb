@@ -18,8 +18,7 @@ module M2yNix
         recipient_account_type: 'CHECKING', # Verificar o que podemos mandar nesse campo
         recipient_bank_name: recipient[:bank][:name]
       }
-      response = @request.post(@url + ACCOUNT_PATH + TRANSFER_PATH + '/bank', body)
-      response
+      @request.post(@url + ACCOUNT_PATH + TRANSFER_PATH + '/bank', body)
     end
 
     def fees
@@ -43,21 +42,21 @@ module M2yNix
         start_event_date: params[:start_event_date],
         event_model: 'TRANSFER'
       }
-     
+
       @request.get(@url + ACCOUNT_PATH + STATEMENT_PATH, body)
     end
 
-    def transfer_statement (params)
+    def transfer_statement(params)
       body = {
         start_event_date: params[:start_event_date],
         end_event_date: params[:end_event_date],
         event_model: 'TRANSFER'
       }
       @request.get(@url + ACCOUNT_PATH + STATEMENT_PATH, body)
-    end 
+    end
 
     def find_payment_by_barcode(barcode)
-      response = @request.post(@url + PAYMENT_PATH + '/bankly-validate-barcode', { "barcode": barcode }) 
+      response = @request.post(@url + PAYMENT_PATH + '/bankly-validate-barcode', { "barcode": barcode })
     end
 
     def pay_billet(params)
@@ -72,7 +71,7 @@ module M2yNix
           validation_id: params[:validation_id]
         }
         response = @request.post(@url + PAYMENT_PATH + '/nix', billet, { 'social-number': params[:social_number] })
-      else  
+      else
         billet = {
           amount: params[:amount],
           code: params[:barcode],
@@ -80,7 +79,7 @@ module M2yNix
           schedule_date: params[:schedule_date]
         }
         response = @request.post(@url + PAYMENT_PATH + '/schedule', billet)
-      end 
+      end
     end
 
     def payments_list(params)
