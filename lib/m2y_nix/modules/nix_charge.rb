@@ -12,7 +12,7 @@ module M2yNix
         puts url 
         HTTParty.get(
           url,
-          query: params
+          query: params,
           headers: {
             Authorization: @token,
             'Content-Type' => 'application/json'
@@ -36,7 +36,7 @@ module M2yNix
         url = @url + '/charges/resend/' + id.to_s
         HTTParty.post(
           url,
-          body: body
+          body: body,
           headers: {
             Authorization: @token,
             'Content-Type' => 'application/json'
