@@ -102,7 +102,7 @@ module M2yNix
       puts url 
       HTTParty.put(
         url,
-        body: body
+        body: body,
         headers: {
           Authorization: @token,
           'Content-Type' => 'application/json'
