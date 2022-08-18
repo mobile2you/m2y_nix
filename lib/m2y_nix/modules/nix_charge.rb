@@ -20,6 +20,19 @@ module M2yNix
         )
       end
 
+      def charges(body)
+        url = @url + '/charges/link'
+        puts url 
+        HTTParty.post(
+          url,
+          body: body,
+          headers: {
+            Authorization: @token,
+            'Content-Type' => 'application/json'
+          }
+        )
+      end
+
       def charge(id)
         url = @url + '/charges/' + id.to_s
         puts url 
