@@ -20,7 +20,7 @@ module M2yNix
         )
       end
 
-      def charges(body)
+      def charges_by_link(body)
         url = @url + '/charges/link'
         puts url 
         HTTParty.post(
