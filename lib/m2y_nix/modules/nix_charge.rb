@@ -58,7 +58,7 @@ module M2yNix
       end
 
       def delete(id)
-        url = @url + '/charges/resend/' + id.to_s
+        url = @url + '/charges/' + id.to_s
         HTTParty.delete(
           url,
           headers: {
