@@ -8,7 +8,7 @@ module M2yNix
       end
       
       def charges(params)
-        url = @url + '/charges/'
+        url = @url + '/charges'
         puts url 
         HTTParty.get(
           url,
