@@ -133,5 +133,18 @@ module M2yNix
         }
       )
     end
+
+    def refund(body)
+      url = @url + '/pix/cash-out/refund'
+      puts url 
+      HTTParty.post(
+        url,
+        body: body,
+        headers: {
+          Authorization: @token,
+          'Content-Type' => 'application/json'
+        }
+      )
+    end
   end
 end
