@@ -2,6 +2,7 @@ module M2yNix
   class NixPayment < NixModule
     def initialize(access_key)
       startModule(access_key)
+      @token = access_key
     end
 
     def transfer(params)
@@ -83,13 +84,14 @@ module M2yNix
     end
 
     def payments_list(params)
-      body = {}
-      body[:offset] = params[:offset] if params[:offset].present?
-      body[:limit] = params[:limit] if params[:limit].present?
-      body[:start_date_created] = params[:start_date_created] if params[:start_date_created].present?
-      body[:end_date_created] = params[:end_date_created] if params[:end_date_created].present?
-      body[:status] = params[:status] if params[:status].present?
-      response = @request.get(@url + PAYMENT_PATH, body)
+      HTTParty.get(
+        @url + ACCOUNT_PATH + STATEMENT_PATH,
+        query: params,
+        headers: {
+          Authorization: @token,
+          'Content-Type' => 'application/json'
+        }
+      )
     end
   end
 end
