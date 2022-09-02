@@ -95,5 +95,16 @@ module M2yNix
         }
       )
     end
+
+    def fee_client(params)
+      HTTParty.get(
+        @url + '/fee-client',
+        query: params,
+        headers: {
+          Authorization: @token,
+          'Content-Type' => 'application/json'
+        }
+      )
+    end
   end
 end
