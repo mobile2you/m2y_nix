@@ -110,11 +110,12 @@ module M2yNix
       )
     end
 
-    def list_limits
+    def list_limits(query)
       url = @url + '/limits/list'
       puts url 
       HTTParty.get(
         url,
+        query: query,
         headers: {
           Authorization: @token,
           'Content-Type' => 'application/json'
