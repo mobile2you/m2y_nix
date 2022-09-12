@@ -8,11 +8,11 @@ module M2yNix
     end
 
     def create_key(body)
-      @request.post("#{@url}/pix/create_key", body)
+      @request.post("#{@url}/pix/create-key", body)
     end
 
     def account_keys
-      @request.get("#{@url}/pix/key_by_account")
+      @request.get("#{@url}/pix/key-by-account")
     end
 
     def account_info_by_key(adressing_key)
