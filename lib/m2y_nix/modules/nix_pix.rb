@@ -124,7 +124,7 @@ module M2yNix
     end
     
     def cancel_schedule(id)
-      url = @url + 'pix/cash-out/schedule' + id.to_s + '/cancel'
+      url = @url + 'pix/cash-out/schedule/' + id.to_s + '/cancel'
       puts url 
       HTTParty.delete(
         url,
