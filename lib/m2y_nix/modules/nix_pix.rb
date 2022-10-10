@@ -86,7 +86,7 @@ module M2yNix
     end
 
     def delete_key(key)
-      url = @url + '/pix/delete_key/' + key.to_s
+      url = @url + '/pix/delete-key/' + key.to_s
       puts url 
       HTTParty.delete(
         url,
