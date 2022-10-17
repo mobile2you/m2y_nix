@@ -136,7 +136,7 @@ module M2yNix
     end
 
     def refund(body)
-      url = @url + '/pix/cash-out/refund'
+      url = @url + '/pix/cash_out/refund'
       puts url 
       HTTParty.post(
         url,
